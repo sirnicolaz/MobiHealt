@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<action id="data_insert" title="Fever diagnostic">
+	<step type="description" title="How to">
+		<title>Welcome to the Fever Diagnostic Wizard</title>
+		<description>During next steps you'll be asked to insert informations about your patient and his health state.
+When you finish the insertion in each step, you've to click "Next" button. During the procedure,
+each action is reversible (by clicking "Back" button). Only when you'll click "Finish" button in the
+last step, your changhes will be stored and sended to the remote server.
+		</description>
+	</step>
+	<step type="fill" title="Patient details">
+		<title>Informations about your patient</title>
+		<label>Name</label>
+		<text type="in" size="medium"></text>
+		<label>Surname</label>
+		<text type="in" size="medium"></text>
+		<label>Address</label>
+		<text type="in" size="large"></text>
+		<label>Age</label>
+		<text type="in" size="tiny"></text>
+		<label>Sex</label>
+		<check type="in" mutex="true">
+			<option selected="true">Male</option>
+			<option>Female</option>
+		</check>
+	</step>
+	<step type="check-up" title="Analisys">
+		<title>Check symptoms</title>
+		<option>Fever</option>
+		<option>Muscle soreness</option>
+		<option>Bone pain</option>
+		<option>Headache</option>
+	</step>
+	<step type="description" title="Summary">
+		<title>Confirm inserted information by clicking "Finish"</title>
+	</step>
+</action>
