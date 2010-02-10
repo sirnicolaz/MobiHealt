@@ -11,8 +11,10 @@
 
 using namespace std;
 
-enum Element {TEXT,SELECT,OPTION,MEDIA,IMAGE,RECORDING,INPUTFIELD};
+enum Element {TEXT,SELECT,OPTION,MEDIA,IMAGE,RECORDING,INPUTFIELD,VOID};
 enum Position {UP,DOWN,LEFT,RIGHT};
+
+class StepGenericElement;
 
 class DescriptorHandler
 {
@@ -31,20 +33,20 @@ public:
     QString getStepTitle(int stepNumber);
     QString getStepTitle(QString ID);
     
-    QString getStepChildType(int stepNumber, int childNumber);
-    QString getStepChildType(QString stepID, int childNumber);
-    QString getStepChildType(int stepNumber, QString childID);
-    QString getStepChildType(QString stepID, QString childID);
-    
-    QString getStepChildContent(int stepNumber, int childNumber);
-    QString getStepChildContent(int stepNumber, QString tag, int number = 0);
-    QString getStepChildTagName(int stepNumber, int childNumber);
+    StepGenericElement * getStepChild(int stepNumber, int childNumber);
+    StepGenericElement * getStepChild(QString stepID, int childNumber);
+    StepGenericElement * getStepChild(int stepNumber, QString childID);
+    StepGenericElement * getStepChild(QString stepID, QString childID);
 
 private:
     QDomDocument *doc;
 
 protected:
     QDomElement getStep(int stepNumber);
+    Element getElementType(QDomElement el);
+    QString getElementAttribute(QDomElement el, QString attribute);
+    StepGenericElement * getElement(QDomElement e);
+    QDomElement getStep(QString stepID);
 };
 
 class StepGenericElement
@@ -68,7 +70,7 @@ protected:
 class Text : public StepGenericElement
 {
 public: 
-	Text(QString type_in, QString id_in, float width_in, int rows_in, Element el_in = TEXT, QString content_in ="");
+	Text(QString type_in, QString id_in, float width_in, int rows_in, QString content_in ="", Element el_in = TEXT);
 	~Text();
 	
 	float getWidth();
@@ -97,14 +99,14 @@ class Select : public StepGenericElement{
 
 	public:
 	
-		Select(QString type_in, QString id_in, bool mutex, Element el_in = SELECT, QString content_in ="");	
+		Select(QString type_in, QString id_in, bool mutex, QString content_in ="", Element el_in = SELECT);	
 		~Select();
 	
 		class Option : public StepGenericElement{
 			friend class Select;
 			public:
 		
-				Option(QString type_in, QString id_in, QString tag_in, QString content_in ="");	
+				Option(QString type_in, QString id_in, QString value_in, QString content_in ="");	
 				~Option();
 				
 				bool isSelected();
@@ -134,7 +136,7 @@ class Select : public StepGenericElement{
 
 class Media : public StepGenericElement{
 public :
-	Media(QString type_in, QString id_in, QString caption_in, bool take_in, Element el_in = MEDIA, QString content_in ="");	
+	Media(QString type_in, QString id_in, QString caption_in, bool take_in, QString content_in ="", Element el_in = MEDIA);	
 	~Media();
 
 	bool isTake();
