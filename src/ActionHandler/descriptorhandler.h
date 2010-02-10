@@ -11,7 +11,7 @@
 
 using namespace std;
 
-enum Element {TEXT,SELECT,OPTION,IMAGE,RECORDING,INPUTFIELD};
+enum Element {TEXT,SELECT,OPTION,MEDIA,IMAGE,RECORDING,INPUTFIELD};
 enum Position {UP,DOWN,LEFT,RIGHT};
 
 class DescriptorHandler
@@ -134,7 +134,7 @@ class Select : public StepGenericElement{
 
 class Media : public StepGenericElement{
 public :
-	Media(QString type_in, QString id_in, QString caption_in, bool take_in, QString content_in ="");	
+	Media(QString type_in, QString id_in, QString caption_in, bool take_in, Element el_in = MEDIA, QString content_in ="");	
 	~Media();
 
 	bool isTake();
@@ -148,7 +148,7 @@ protected:
 
 class Image : public Media{
 public:
-	Image(QString type_in, QString id_in, QString caption_in, bool take_in, float width, float height, QString content_in ="");	
+	Image(QString type_in, QString id_in, QString caption_in, bool take_in, float width_in, float height_in, QString content_in ="");	
 	~Image();
 	
 	float getWidth();

@@ -230,57 +230,57 @@ Select::Option::Option(QString type_in, QString id_in, QString value_in, QString
 	this->value = value_in;
 }
 
-/*
-		class Option : public StepGenericElement{
-			public:
-		
-				Option(QString type_in, QString id_in, QString value, QString content_in ="");	
-				~Option();
-				
-				bool isSelected();
-				QString getValue();
-				
-			protected:
-				Select * father;
-				bool selected;
-				QString value;
-		};
+bool Select::Option::isSelected(){
+	return this->selected;
+}
 
-class Media : public StepGenericElement{
-public :
-	Media(QString type_in, QString id_in, QString caption_in, bool take_in, QString content_in ="");	
-	~Media();
+QString Select::Option::getValue(){
+	return this->value;
+}
 
-	bool isTake();
-	
-	QString getCaption();
-	
-protected:
-	bool take;
-	QString caption;
-};
+void Select::Option::setFather(Select * father_in){
+	father = father_in;
+}
 
-class Image : public Media{
-public:
-	Image(QString type_in, QString id_in, QString caption_in, bool take_in, float width, float height, QString content_in ="");	
-	~Image();
-	
-	float getWidth();
-	float getHeight();
-	
-protected:
-	float width;
-	float height;
-};
+void Select::Option::setSelected(bool selected_in){
+	selected = selected_in;
+}
 
-class Recording : public Media{
-public:
-	Recording(QString type_in, QString id_in, QString caption_in, bool take_in, float dur = 0.0, QString content_in ="");	
-	~Recording();
-	
-	float getDur();
-	
-protected:
-	float dur;
-};
-*/
+
+Media::Media(QString type_in, QString id_in, QString caption_in, bool take_in, Element el_in, QString content_in) :
+		StepGenericElement(type_in,id_in,el_in,content_in){
+	this->caption = caption_in;
+	this->take = take_in;
+}
+
+bool Media::isTake(){
+	return this->take;
+}
+
+QString Media::getCaption(){
+	return this->caption;
+}
+
+Image::Image(QString type_in, QString id_in, QString caption_in, bool take_in, float width_in, float height_in, QString content_in) :
+		Media(type_in,id_in,caption_in,take_in,IMAGE){
+	this->width = width_in;
+	this->height = height_in;
+}
+
+float Image::getWidth(){
+	return this->width;
+}
+
+float Image::getHeight(){
+	return this->height;
+}
+
+Recording::Recording(QString type_in, QString id_in, QString caption_in, bool take_in, float dur_in, QString content_in) :
+		Media(type_in,id_in,caption_in,take_in,RECORDING){
+	this->dur = dur_in;
+}
+
+float Recording::getDur(){
+	return this->getDur();
+}
+
