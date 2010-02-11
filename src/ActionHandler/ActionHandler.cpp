@@ -30,11 +30,34 @@
 
 #include "ActionHandler.h"
 
+#include "descriptorhandler.h"
+#include "descriptorelements.h"
+#include <QPushButton>
+#include <QVBoxLayout>
+
 ActionHandler::ActionHandler(QWidget *parent)
     : QWidget(parent)
 {
 	ui.setupUi(this);
+	
+	QVBoxLayout *mainLayout = new QVBoxLayout();
+	mainLayout->setAlignment(Qt::AlignCenter);
+		
+	StepGenericElement * elementTest;
+	DescriptorHandler * descrTest = new DescriptorHandler("action-descriptor.xml");
+	
+	elementTest = descrTest->getStepChild(1,0);
+	
+	button1 = new QPushButton(descrTest->getActionTitle(), this);
+	button2 = new QPushButton(elementTest->getContent(), this);
+	button3 = new QPushButton("Action3", this);
+	mainLayout->addWidget(button1);
+	mainLayout->addWidget(button2);
+	mainLayout->addWidget(button3);
+		
+	setLayout(mainLayout);
 }
+
 
 ActionHandler::~ActionHandler()
 {

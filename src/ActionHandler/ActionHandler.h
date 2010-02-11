@@ -34,6 +34,10 @@
 #include <QtGui/QWidget>
 #include "ui_ActionHandler.h"
 
+class QPushButton;
+class Action1Dialog;
+class Action1Widget;
+
 class ActionHandler : public QWidget
 {
     Q_OBJECT
@@ -46,7 +50,9 @@ private:
     Ui::ActionHandler ui;
     
 protected:
-    
+    QPushButton *button1;
+    QPushButton *button2;
+    QPushButton *button3;
 };
 
 #endif // ACTIONHANDLER_H
