@@ -4,18 +4,21 @@ QT += core \
     gui \
     xml \
     xmlpatterns
-HEADERS += descriptorelements.h \
-    descriptorhandler.h \
+HEADERS += GenericStep.h \
+    DescriptorHandler.h \
+    DescriptorElements.h \
     ActionHandler.loc \
     ActionHandler.h
-SOURCES += descriptorelements.cpp \
+SOURCES += GenericStep.cpp \
+    DescriptorHandler.cpp \
+    DescriptorElements.cpp \
     dhMain.cpp \
-    descriptorhandler.cpp \
     ActionHandler.rss \
     ActionHandler_reg.rss \
     main.cpp \
     ActionHandler.cpp
-FORMS += ActionHandler.ui
+FORMS += GenericStep.ui \
+    ActionHandler.ui
 MMP_RULES += "LIBRARY efsrv.lib"
 MMP_RULES += "LIBRARY cone.lib"
 MMP_RULES += "LIBRARY estor.lib"

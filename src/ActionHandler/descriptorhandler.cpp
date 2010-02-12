@@ -1,4 +1,4 @@
-#include "descriptorhandler.h"
+#include "DescriptorHandler.h"
 #include <QDomNode>
 #include <s32file.h>
 #include <f32file.h> 
@@ -183,6 +183,7 @@ StepGenericElement * DescriptorHandler::getElement(QDomElement e){
 		default:
 			break;
 	}
+	//TODO: don't return null!!!!
 	return element;
 }
 
