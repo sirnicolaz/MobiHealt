@@ -7,6 +7,9 @@
 
 #define IO_ReadOnly QIODevice::ReadOnly
 
+//For test only
+#include <iostream>
+using namespace std;
 
 DescriptorHandler::DescriptorHandler(QString fileName)
 {
@@ -154,11 +157,15 @@ StepGenericElement * DescriptorHandler::getElement(QDomElement e){
 			element = new Select( this->getElementAttribute(e,"type"),  this->getElementAttribute(e,"id"), mutex , e.firstChild().nodeValue());
 			QDomElement opt_el = e.firstChildElement("option");
 			Select * tmp_sel = dynamic_cast<Select*>(element);
-			while(!opt_el.isNull()){
-				Select::Option opt(this->getElementAttribute(opt_el,"type"), this->getElementAttribute(opt_el,"id"), this->getElementAttribute(opt_el,"value"), e.firstChild().nodeValue());
-				tmp_sel->addOption(opt);
+			if(tmp_sel != 0){
+				while(!opt_el.isNull()){
+					Select::Option opt(this->getElementAttribute(opt_el,"type"), this->getElementAttribute(opt_el,"id"), this->getElementAttribute(opt_el,"value"), opt_el.text());
+					tmp_sel->addOption(opt);
+					opt_el = opt_el.nextSiblingElement("option");
+				}
+				//TODO: verify that there is an option to select
+				tmp_sel->getOption(0).setSelected(true);
 			}
-			tmp_sel->getOption(0).setSelected(true);
 			return element;
 			
 		case IMAGE:

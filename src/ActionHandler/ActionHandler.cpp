@@ -34,6 +34,10 @@
 #include "descriptorelements.h"
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <vector>
+#include "GenericStep.h"
+
+using namespace std;
 
 ActionHandler::ActionHandler(QWidget *parent)
     : QWidget(parent)
@@ -43,18 +47,26 @@ ActionHandler::ActionHandler(QWidget *parent)
 	QVBoxLayout *mainLayout = new QVBoxLayout();
 	mainLayout->setAlignment(Qt::AlignCenter);
 		
-	StepGenericElement * elementTest;
+	vector<StepGenericElement*> elementsTest;
 	DescriptorHandler * descrTest = new DescriptorHandler("action-descriptor.xml");
+	elementsTest.push_back(descrTest->getStepChild(1,0));
+	elementsTest.push_back(descrTest->getStepChild(1,1));
 	
-	elementTest = descrTest->getStepChild(1,0);
+	GenericStep * genericStepTest = new GenericStep(true,elementsTest,this);
 	
-	button1 = new QPushButton(descrTest->getActionTitle(), this);
-	button2 = new QPushButton(elementTest->getContent(), this);
-	button3 = new QPushButton("Action3", this);
-	mainLayout->addWidget(button1);
-	mainLayout->addWidget(button2);
-	mainLayout->addWidget(button3);
+	QWidget * testStep = genericStepTest;
+	
+	
+	//button1 = new QPushButton("Action1", this);
+	//button2 = new QPushButton("Action2", this);
+	//button3 = new QPushButton("Action3", this);
+	//mainLayout->addWidget(button1);
+	//mainLayout->addWidget(button2);
+	//mainLayout->addWidget(button3);
 		
+	mainLayout->addWidget(testStep);
+	testStep->show();
+	
 	setLayout(mainLayout);
 }
 
