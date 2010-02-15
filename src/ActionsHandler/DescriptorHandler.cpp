@@ -51,6 +51,16 @@ DescriptorHandler::DescriptorHandler(QString fileName)
     file.Close();
 }
 
+int DescriptorHandler::getStepsQty(){
+	QDomElement e = getStep(0);
+	int stepsQty = 0;
+	while(e.attribute("notFound")!="true"){
+		stepsQty++;
+		e = getStep(stepsQty);
+	}
+	return stepsQty;
+}
+
 QDomElement DescriptorHandler::getStep(int stepNumber){
 
     QDomElement e = doc->documentElement();
@@ -236,6 +246,37 @@ QString DescriptorHandler::getStepTitle(QString type){
     }
     return "";
 
+}
+
+int DescriptorHandler::getStepChildsQty(int stepNumber){
+	QDomElement stepElement = this->getStep(stepNumber);
+	int childsQty = 0;
+	bool exit = false;
+	QDomElement stepChildElement = stepElement.firstChild().toElement();
+	while(!stepChildElement.isNull() && !exit){
+			childsQty++;
+		if(!stepChildElement.nextSibling().isNull())
+			stepChildElement = stepChildElement.nextSibling().toElement();
+		else
+			exit = true;
+	}
+	return childsQty;
+}
+
+int DescriptorHandler::getStepChildsQty(QString stepID){
+	QDomElement stepElement = this->getStep(stepID);
+	int childsQty = 0;
+	bool exit = false;
+	QDomElement stepChildElement = stepElement.firstChild().toElement();
+	while(!stepChildElement.isNull() && !exit){
+			childsQty++;
+		if(!stepChildElement.nextSibling().isNull())
+			stepChildElement = stepChildElement.nextSibling().toElement();
+		else
+			exit = true;
+	}
+	return childsQty;
+	
 }
 
 StepGenericElement * DescriptorHandler::getStepChild(int stepNumber, int childNumber){

@@ -28,50 +28,47 @@
 **
 ****************************************************************************/
 
-#include "ActionHandler.h"
+#include "ActionsHandler.h"
 
-#include "descriptorhandler.h"
-#include "descriptorelements.h"
+#include "DescriptorHandler.h"
+#include "DescriptorElements.h"
+#include "Action.h"
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <vector>
-#include "GenericStep.h"
 
 using namespace std;
 
-ActionHandler::ActionHandler(QWidget *parent)
-    : QWidget(parent)
+ActionsHandler::ActionsHandler(QWidget *parent)
+    : QMainWindow(parent)
 {
 	ui.setupUi(this);
 	
 	QVBoxLayout *mainLayout = new QVBoxLayout();
 	mainLayout->setAlignment(Qt::AlignCenter);
-		
-	vector<StepGenericElement*> elementsTest;
-	DescriptorHandler * descrTest = new DescriptorHandler("action-descriptor.xml");
-	elementsTest.push_back(descrTest->getStepChild(1,0));
-	elementsTest.push_back(descrTest->getStepChild(1,1));
 	
-	GenericStep * genericStepTest = new GenericStep(true,elementsTest,this);
+	DescriptorHandler * actionDescriptor = new DescriptorHandler("action-descriptor.xml"); 
 	
-	QWidget * testStep = genericStepTest;
+	testAction = new Action(actionDescriptor,this);
 	
+	button1 = new QPushButton("Action", this);
+	mainLayout->addWidget(button1);
 	
-	//button1 = new QPushButton("Action1", this);
-	//button2 = new QPushButton("Action2", this);
-	//button3 = new QPushButton("Action3", this);
-	//mainLayout->addWidget(button1);
-	//mainLayout->addWidget(button2);
-	//mainLayout->addWidget(button3);
-		
-	mainLayout->addWidget(testStep);
-	testStep->show();
-	
+	connect(button1, SIGNAL(clicked()), this, SLOT(showAction()));
 	setLayout(mainLayout);
+	
 }
 
+/* show action1 slot implementation */
+void ActionsHandler::showAction()
+{
+	/* create action1 widget as a main widget (aka without a parent) to have fullscreen widget (todo) */
+	/* --> ATTENTION: needs explicit deallocation (deleteOnClose)!!! <-- */
+	testAction->showMaximized(); /* works only with main widget */
+}
 
-ActionHandler::~ActionHandler()
+ActionsHandler::~ActionsHandler()
 {
 
 }
+

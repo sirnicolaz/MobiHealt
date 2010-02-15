@@ -21,6 +21,8 @@ public:
     QString getActionId();
     QString getActionTitle();
 
+    int getStepsQty();
+    
     QString getStepID(int stepNumber);
     
     QString getStepType(int stepNumber);
@@ -28,6 +30,9 @@ public:
     
     QString getStepTitle(int stepNumber);
     QString getStepTitle(QString ID);
+    
+    int getStepChildsQty(int stepNumber);
+    int getStepChildsQty(QString stepID);
     
     StepGenericElement * getStepChild(int stepNumber, int childNumber);
     StepGenericElement * getStepChild(QString stepID, int childNumber);

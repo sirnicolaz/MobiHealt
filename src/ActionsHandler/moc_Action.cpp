@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'ActionHandler.h'
+** Meta object code from reading C++ file 'Action.h'
 **
-** Created: Wed Feb 10 21:16:51 2010
+** Created: Mon Feb 15 06:54:11 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "ActionHandler.h"
+#include "Action.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'ActionHandler.h' doesn't include <QObject>."
+#error "The header file 'Action.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 62
 #error "This file was generated using the moc from 4.6.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,53 +17,65 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_ActionHandler[] = {
+static const uint qt_meta_data_Action[] = {
 
  // content:
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+       8,    7,    7,    7, 0x09,
+      19,    7,    7,    7, 0x09,
+
        0        // eod
 };
 
-static const char qt_meta_stringdata_ActionHandler[] = {
-    "ActionHandler\0"
+static const char qt_meta_stringdata_Action[] = {
+    "Action\0\0nextStep()\0preStep()\0"
 };
 
-const QMetaObject ActionHandler::staticMetaObject = {
-    { &QWidget::staticMetaObject, qt_meta_stringdata_ActionHandler,
-      qt_meta_data_ActionHandler, 0 }
+const QMetaObject Action::staticMetaObject = {
+    { &QWidget::staticMetaObject, qt_meta_stringdata_Action,
+      qt_meta_data_Action, 0 }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &ActionHandler::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &Action::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *ActionHandler::metaObject() const
+const QMetaObject *Action::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *ActionHandler::qt_metacast(const char *_clname)
+void *Action::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_ActionHandler))
-        return static_cast<void*>(const_cast< ActionHandler*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_Action))
+        return static_cast<void*>(const_cast< Action*>(this));
     return QWidget::qt_metacast(_clname);
 }
 
-int ActionHandler::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Action::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: nextStep(); break;
+        case 1: preStep(); break;
+        default: ;
+        }
+        _id -= 2;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE

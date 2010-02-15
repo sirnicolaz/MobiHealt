@@ -28,31 +28,29 @@
 **
 ****************************************************************************/
 
-#ifndef ACTIONHANDLER_H
-#define ACTIONHANDLER_H
+#ifndef ACTIONSHANDLER_H
+#define ACTIONSHANDLER_H
 
-#include <QtGui/QWidget>
-#include "ui_ActionHandler.h"
+#include <QtGui/QMainWindow>
+#include "ui_ActionsHandler.h"
+#include <QPushButton>
+#include "Action.h"
 
-class QPushButton;
-class Action1Dialog;
-class Action1Widget;
-
-class ActionHandler : public QWidget
+class ActionsHandler : public QMainWindow
 {
     Q_OBJECT
 
 public:
-	ActionHandler(QWidget *parent = 0);
-    ~ActionHandler();
+	ActionsHandler(QWidget *parent = 0);
+    ~ActionsHandler();
 
 private:
-    Ui::ActionHandler ui;
+    Ui::ActionsHandler ui;
+    QPushButton * button1;
+    Action * testAction;
     
-protected:
-    QPushButton *button1;
-    QPushButton *button2;
-    QPushButton *button3;
+protected slots:
+	void showAction();
 };
 
-#endif // ACTIONHANDLER_H
+#endif // ACTIONSHANDLER_H

@@ -28,18 +28,15 @@
 **
 ****************************************************************************/
 
-#include "ActionHandler.h"
+#include "ActionsHandler.h"
 
 #include <QtGui>
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-
     QApplication a(argc, argv);
-    ActionHandler w;
+    ActionsHandler w;
     w.showMaximized();
     return a.exec();
-    
 }
-
