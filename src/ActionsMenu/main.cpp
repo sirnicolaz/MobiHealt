@@ -32,11 +32,18 @@
 
 #include <QtGui>
 #include <QApplication>
+#include <vector>
+
+using namespace std;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ActionsMenu w;
-    w.showMaximized();
+    
+    vector<QString> descriptors;
+    descriptors.push_back(QString("action-descriptor.xml"));
+    
+    ActionsMenu * testAction = new ActionsMenu(descriptors);
+    testAction->showMaximized();
     return a.exec();
 }

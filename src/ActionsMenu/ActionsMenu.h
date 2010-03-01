@@ -38,22 +38,39 @@
 #include <QVBoxLayout>
 #include "Action.h"
 
+
+class QPushButtonWithID : public QPushButton{
+	Q_OBJECT
+public:
+	QPushButtonWithID(QString title, int ID, QWidget * parent = 0);
+
+protected slots:
+	void clickWithID();
+signals:
+	void clickedWithID(int);
+
+private:
+	int ID;
+};
+
+
 class ActionsMenu : public QWidget
 {
     Q_OBJECT
 
 public:
-	ActionsMenu(QWidget *parent = 0);
+	ActionsMenu(vector<QString> actionDescriptorFilesName, QWidget *parent = 0);
     ~ActionsMenu();
 
 private:
     Ui::ActionsMenu ui;
-    vector<QPushButton*> menuButtons;
+    vector<QPushButtonWithID*> menuButtons;
     Action * testAction;
     QVBoxLayout *mainLayout;
+    vector<QString> descriptors;
     
-protected slots:
-	void showAction();
+public slots:
+	void showAction(int);
 };
 
 #endif // ACTIONSMENU_H

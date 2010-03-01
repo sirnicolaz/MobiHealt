@@ -38,39 +38,57 @@
 
 using namespace std;
 
-ActionsMenu::ActionsMenu(QWidget *parent)
+ActionsMenu::ActionsMenu(vector<QString> actionDescriptorFileNames, QWidget *parent)
     : QWidget(parent)
 {
 	ui.setupUi(this);
 	
 	mainLayout = new QVBoxLayout();
 	mainLayout->setAlignment(Qt::AlignCenter);
+	descriptors = actionDescriptorFileNames;
 	
-	menuButtons.push_back(new QPushButton("Action 1", this));
-	menuButtons.push_back(new QPushButton("Action 2", this));
-	menuButtons.push_back(new QPushButton("Action 3", this));
-	mainLayout->addWidget(menuButtons[0]);
-	mainLayout->addWidget(menuButtons[1]);
-	mainLayout->addWidget(menuButtons[2]);
-	
-	connect(menuButtons[0], SIGNAL(clicked()), this, SLOT(showAction()));
-	connect(menuButtons[1], SIGNAL(clicked()), this, SLOT(showAction()));
-	connect(menuButtons[2], SIGNAL(clicked()), this, SLOT(showAction()));
+	for(int i=0; i<actionDescriptorFileNames.size(); i++){
+		QString currentFileName = actionDescriptorFileNames[i];
+		DescriptorHandler * actionDescriptor = new DescriptorHandler(currentFileName);
+		menuButtons.push_back(new QPushButtonWithID(actionDescriptor->getActionTitle(), i, this));
+		mainLayout->addWidget(menuButtons[i]);
+		
+		//A tricky tricky tricky way to identify the button that sends the signal:
+			//When the button is clicked, the signal is sent to a method defined for the derived class QPushButtonWithID
+			//The slot clickWithID sends a signal to clickedWithID specifying its ID
+			//The ActionsMenu takes the signal with the slot showAction where, now, there is the ID of the
+			//action it has to show. Fiuu.
+		connect(menuButtons[i], SIGNAL(clicked()), menuButtons[i], SLOT(clickWithID()));
+		connect(menuButtons[i], SIGNAL(clickedWithID(int)), this, SLOT(showAction(int)));
+	}
 	
 	setLayout(mainLayout);
 }
 
 /* show action1 slot implementation */
-void ActionsMenu::showAction()
+void ActionsMenu::showAction(int who)
 {
 	/* create action1 widget as a main widget (aka without a parent) to have fullscreen widget (todo) */
 	/* --> ATTENTION: needs explicit deallocation (deleteOnClose)!!! <-- */
-	DescriptorHandler * actionDescriptor = new DescriptorHandler("action-descriptor.xml"); 
+	DescriptorHandler * actionDescriptor = new DescriptorHandler(descriptors[who]); 
 	testAction = new Action(actionDescriptor,this);
 	testAction->showMaximized(); /* works only with main widget */
+	
 }
 
 ActionsMenu::~ActionsMenu()
 {
 
 }
+
+
+QPushButtonWithID::QPushButtonWithID(QString title, int ID, QWidget * parent) :
+		QPushButton(title,parent){
+	this->ID = ID;
+}
+
+void QPushButtonWithID::clickWithID(){
+	emit clickedWithID(this->ID);
+}
+
+
