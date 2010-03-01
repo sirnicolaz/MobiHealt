@@ -22,5 +22,6 @@ FORMS += Action.ui \
 MMP_RULES += "LIBRARY efsrv.lib"
 MMP_RULES += "LIBRARY cone.lib"
 MMP_RULES += "LIBRARY estor.lib"
+MMP_RULES += "LIBRARY charconv.lib"
 RESOURCES +=
 symbian:TARGET.UID3 = 0xEC08430B

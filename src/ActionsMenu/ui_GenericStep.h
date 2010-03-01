@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'GenericStep.ui'
 **
-** Created: Tue Feb 23 09:20:09 2010
+** Created: Mon Mar 1 11:48:27 2010
 **      by: Qt User Interface Compiler version 4.6.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

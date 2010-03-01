@@ -84,6 +84,9 @@ protected:
     Element getElementType(QDomElement el);
     QString getElementAttribute(QDomElement el, QString attribute);
     StepGenericElement * getElement(QDomElement e);
+    
+    //Helpers
+    HBufC16 * FName(char * string_in);
 };
 
 #endif // DESCRIPTORHANDLER_H

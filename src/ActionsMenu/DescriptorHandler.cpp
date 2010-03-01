@@ -6,6 +6,7 @@
 #include <EIKENV.H>
 #include <string.h>
 #include <E32SVR.H>
+#include <utf.h>
 
 #define IO_ReadOnly QIODevice::ReadOnly
 
@@ -13,35 +14,40 @@
 #include <iostream>
 using namespace std;
 
+HBufC16 * DescriptorHandler::FName(char* string_in)
+{
+       TPtr8 tFileName8((unsigned char*)string_in, strlen(string_in), strlen(string_in));
+       HBufC* tFileName = CnvUtfConverter::ConvertToUnicodeFromUtf8L(tFileName8);
+       HBufC16 * iFileName = tFileName->AllocL();
+       delete tFileName;
+       return iFileName;
+}
+
 DescriptorHandler::DescriptorHandler(QString fileName)
 {
 	RFile file;
 	RFs iFs;
 	iFs = CEikonEnv::Static()->FsSession();
 	
+	/* OLD version: it took a static file name. I keep it here commented just to be sure. */
     //RFileWriteStream base64File;
     //base64File.Replace(iFs,_L("test.txt"),EFileWrite|EFileStream);
-	
     //TODO: convert fileName in something can be accepted by _L
+	//TInt err = file.Open(iFs,_S(fileName),EFileRead|EFileStream); //-->to test
+	//TInt err = file.Open(iFs,_L("action-descriptor.xml"),EFileRead|EFileStream);
+	//this->fileName = "action-descriptor.xml";	
+	//QFile file(fileName);
+	
     this->fileName = fileName;
-    //TInt err = file.Open(iFs,_S(fileName),EFileRead|EFileStream); //-->to test
     
-    /*
-     *  const string fileNameString = fileName.toStdString();
-		char * fileNameCharStar = new char[fileNameString.size()];
+    const string fileNameString = fileName.toStdString();
+	char * fileNameCharStar = new char[fileNameString.size()];
 	
-		strcpy(fileNameCharStar,fileNameString.c_str());
+	strcpy(fileNameCharStar,fileNameString.c_str());
+	HBufC16 * fileNameBuf = FName(fileNameCharStar);
 	
-		TText * output = (TText*)fileNameCharStar;
-		TPtrC ptr(output);
-		
-		TInt err = file.Open(iFs,ptr,EFileRead|EFileStream);
-     */
-    
-	TInt err = file.Open(iFs,_L("action-descriptor.xml"),EFileRead|EFileStream);
-	this->fileName = "action-descriptor.xml";
+    TInt err = file.Open(iFs,fileNameBuf->Des(),EFileRead|EFileStream);
 	
-    //QFile file(fileName);
     if(err!=KErrNone){
         cout<<"No files."<<endl<<"Exiting.."<<endl;
         return;
@@ -488,23 +494,15 @@ bool DescriptorHandler::saveToFS(QString fileName_in){
 	iFs = CEikonEnv::Static()->FsSession();	
 	
 	RFileWriteStream saveFile;
-	//TODO: replace the static file name with a name given by the string
-	// 		"save-" concatenated with the variable fileName
-	/*
-	 * string prefix = "save-";
+	
+	string prefix = "save-";
     const string fileNameString = prefix.append(fileName.toStdString());
 	char * fileNameCharStar = new char[fileNameString.size()];
 	
 	strcpy(fileNameCharStar,fileNameString.c_str());
+	HBufC16 * fileNameBuf = FName(fileNameCharStar);
 	
-	TText * fileNameDescriptor = (TText*)fileNameCharStar;
-
-	TBuf<8> stringBuffer(fileNameString.length());
-	TPtrC fileNameDescriptorPointer(fileNameDescriptor,sizeof(fileNameString));
-	saveFile.Replace(iFs,_L(fileNameString),EFileWrite|EFileStream);
-	*/
-	
-	saveFile.Replace(iFs,_L("action-descriptor_save.xml"),EFileWrite|EFileStream);
+	saveFile.Replace(iFs,  fileNameBuf->Des(),EFileWrite|EFileStream);
 	
 	const string documentString = doc->toString(1).toStdString();
 	char * document = new char[documentString.size()];
