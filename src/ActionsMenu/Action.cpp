@@ -74,12 +74,31 @@ GenericStep * Action::createStep(int stepNumber){
 	return 0;
 }
 
+/*
+ * This method save the current state of a step. For now it only works with
+ * the inputText and radio button elements, because images and recordings are
+ * not yet implemented.
+ */
+
 void Action::saveStep(GenericStep * step_in){
 	for(int i=0; step_in->getInputElement(i)!=0; i++){
 		QWidget * inputWidg = step_in->getInputElement(i);
 		
 		QTextEdit * inputText = dynamic_cast<QTextEdit*>(inputWidg);
 		QRadioButton * radioButton = dynamic_cast<QRadioButton*>(inputWidg);
+		/* 
+		 * TODO: images and recordings save. 
+		 * 		HINT:
+		 * 			Use something like
+		 * 				Q<what you used to render image> * image = dynamic_cast<...*>(inputWidg);
+		 * 				if(image != 0){
+		 * 					string base64image = <convert the image in base 64>
+		 *					actionDescriptor->setStepChildContent(step_in->getID(),image->objectName(),base64image);
+		 *				}
+		 *		Whortless to say that this step require that the image objectName is set to the ID of the corresponding 
+		 *		element in the configuration file.
+		 */
+		
 		
 		if(inputText != 0){
 			actionDescriptor->setStepChildContent(step_in->getID(),inputText->objectName(),inputText->toPlainText());

@@ -3,6 +3,10 @@
  *
  *  Created on: Feb 11, 2010
  *      Author: Jack
+ *      
+ *  The package contains a collection of classes that are supposed to represent
+ *  a step object. They are an high level abstraction of the elements that
+ *  may be found in the xml step configuration file.
  */
 
 #ifndef DESCRIPTORELEMENTS_H_
@@ -13,9 +17,20 @@
 
 using namespace std;
 
+/* "Element" are all the type of enetities that could be used to build 
+ * a step. VOID represents the null element. It's only used to handle exception.
+ */
 enum Element {TEXT,SELECT,OPTION,MEDIA,IMAGE,RECORDING,INPUTFIELD,VOID};
+
+/* "Position" sed to locate the the label of a text field.
+ * 		UP: label over the textfield
+ * 		DOWN: label below the textfield
+ * 		LEFT: label left to the textfield
+ * 		RIGHT: label right to the textfield
+ */
 enum Position {UP,DOWN,LEFT,RIGHT};
 
+/* It represents the common features among al the elements. */
 class StepGenericElement
 {
 public:
@@ -34,6 +49,7 @@ protected:
 	QString content;
 };
 
+/* It's a generic text field box */
 class Text : public StepGenericElement
 {
 public: 
@@ -48,6 +64,9 @@ protected:
 	int rows;
 };
 
+/* It's an text field with a label associated. The label can be located using the
+ * "Position" type.
+ */
 class Input : public Text
 {
 public:
@@ -62,6 +81,10 @@ protected:
 	Position pos;
 };
 
+
+/* It represents a multiple choice list. Choices can be mutually exclusive or not.
+ * Each choice of the select element has a list of "Option".
+ */
 class Select : public StepGenericElement{
 
 	public:
@@ -69,6 +92,12 @@ class Select : public StepGenericElement{
 		Select(QString type_in, QString id_in, bool mutex, QString content_in ="", Element el_in = SELECT);	
 		//~Select();
 	
+		/* It's a choice of a Select.
+		 * The value field should be the returing value of the field, but
+		 * the qt "radio button" doesn't allow to set such a field, so,
+		 * at the moment, it's totally pointless. The returned value, for now,
+		 * the content of the element.
+		 */
 		class Option : public StepGenericElement{
 			friend class Select;
 			public:
@@ -102,6 +131,10 @@ class Select : public StepGenericElement{
 		
 };
 
+/* It represents a generic media (that could an image, a sound o whatever you want).
+ * The "take" attribute, if it's set to true, indicates that the media is supposed
+ * to be taken by the device.
+ */
 class Media : public StepGenericElement{
 public :
 	Media(QString type_in, QString id_in, QString caption_in, bool take_in, QString content_in ="", Element el_in = MEDIA);	
@@ -129,6 +162,10 @@ protected:
 	float height;
 };
 
+
+/* It's the element representing a recording. The "dur" attribute  is the duration
+ * of the recording.
+ */
 class Recording : public Media{
 public:
 	Recording(QString type_in, QString id_in, QString caption_in, bool take_in, float dur = 0.0, QString content_in ="");	

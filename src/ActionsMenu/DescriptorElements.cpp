@@ -3,11 +3,17 @@
  *
  *  Created on: Feb 11, 2010
  *      Author: Jack
+ *  
+ *  The package contains a collection of classes that are supposed to represent
+ *  a step object. They are an high level abstraction of the elements that
+ *  may be found in the xml step configuration file.
  */
 
 #include "DescriptorElements.h"
 
 //StepGenericElement methods implementation
+
+
 
 StepGenericElement::StepGenericElement(QString type_in, QString id_in, Element el_in, QString content_in){
 	this->type = type_in;
@@ -170,5 +176,5 @@ Recording::Recording(QString type_in, QString id_in, QString caption_in, bool ta
 }
 
 float Recording::getDur(){
-	return this->getDur();
+	return this->dur;
 }

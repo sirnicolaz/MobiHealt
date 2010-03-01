@@ -93,8 +93,20 @@ GenericStep::GenericStep( bool isInput_in, QString ID_in, vector<StepGenericElem
 					mainLayout->addWidget(inputContainer);
 					break;
 				case IMAGE:
+					/* TODO: Given an Image element, this part of the code should
+					 * renderize a box (as big as width and height attributes say)
+					 * containing the image. The base64 encoding of the image is given
+					 * by the content of the element. Probably the most part of the times
+					 * this functionality won't be required. The important thing to do
+					 * is to renderize a button to snap the photo.
+					 */
 					break;
 				case RECORDING:
+					/* TODO:
+					 * The stuff to do is exactly the same then the one of the image. The only 
+					 * differenze is that you have to renderize a "record","play","pause" button
+					 * to interact with the mobile recorder.
+					 */
 					break;
 				case SELECT:
 					Select * selectElement = dynamic_cast<Select*>(currentElement);
@@ -104,6 +116,10 @@ GenericStep::GenericStep( bool isInput_in, QString ID_in, vector<StepGenericElem
 							Select::Option optionElement = selectElement->getOption(j);
 							QRadioButton * option = new QRadioButton(optionElement.getContent(), this);
 							option->setChecked(optionElement.isSelected());
+							
+							//The object name is eventually used to retrive the object reference
+							//(During the saving process).
+							//So the ID in the configuration file MUST be unique.
 							option->setObjectName(optionElement.getId());
 							inputElements.push_back(option);
 							radioGroup->addButton(option);

@@ -8,11 +8,12 @@
 
 using namespace std;
 
-//This class represents the simplest kind of step. In this step
-//the elements are simply renderized in the order they are given.
-//If the step is supposed to contain input fields ( bool inputStep = 3 ),
-//then some get methods will allow the client to obtain the correspondent
-//values
+/*This class represents the simplest kind of step. In this step
+ *the elements are simply renderized in the order they are given.
+ *If the step is supposed to contain input fields ( bool inputStep = 3 ),
+ *then some get methods will allow the client to obtain the correspondent
+ *values
+*/
 
 class GenericStep : public QWidget
 {

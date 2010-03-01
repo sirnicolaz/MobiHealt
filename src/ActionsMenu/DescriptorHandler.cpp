@@ -5,6 +5,7 @@
 #include <aknviewappui.h> 
 #include <EIKENV.H>
 #include <string.h>
+#include <E32SVR.H>
 
 #define IO_ReadOnly QIODevice::ReadOnly
 
@@ -24,6 +25,19 @@ DescriptorHandler::DescriptorHandler(QString fileName)
     //TODO: convert fileName in something can be accepted by _L
     this->fileName = fileName;
     //TInt err = file.Open(iFs,_S(fileName),EFileRead|EFileStream); //-->to test
+    
+    /*
+     *  const string fileNameString = fileName.toStdString();
+		char * fileNameCharStar = new char[fileNameString.size()];
+	
+		strcpy(fileNameCharStar,fileNameString.c_str());
+	
+		TText * output = (TText*)fileNameCharStar;
+		TPtrC ptr(output);
+		
+		TInt err = file.Open(iFs,ptr,EFileRead|EFileStream);
+     */
+    
 	TInt err = file.Open(iFs,_L("action-descriptor.xml"),EFileRead|EFileStream);
 	this->fileName = "action-descriptor.xml";
 	
@@ -474,6 +488,22 @@ bool DescriptorHandler::saveToFS(QString fileName_in){
 	iFs = CEikonEnv::Static()->FsSession();	
 	
 	RFileWriteStream saveFile;
+	//TODO: replace the static file name with a name given by the string
+	// 		"save-" concatenated with the variable fileName
+	/*
+	 * string prefix = "save-";
+    const string fileNameString = prefix.append(fileName.toStdString());
+	char * fileNameCharStar = new char[fileNameString.size()];
+	
+	strcpy(fileNameCharStar,fileNameString.c_str());
+	
+	TText * fileNameDescriptor = (TText*)fileNameCharStar;
+
+	TBuf<8> stringBuffer(fileNameString.length());
+	TPtrC fileNameDescriptorPointer(fileNameDescriptor,sizeof(fileNameString));
+	saveFile.Replace(iFs,_L(fileNameString),EFileWrite|EFileStream);
+	*/
+	
 	saveFile.Replace(iFs,_L("action-descriptor_save.xml"),EFileWrite|EFileStream);
 	
 	const string documentString = doc->toString(1).toStdString();
