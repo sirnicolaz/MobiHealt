@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<action id="test" title="TextBoxTest">
+	<step id="1" type="photo" title="Scatta una foto?">
+		<text type="out" id="photo">Il paziente presenta un'irritazione cutanea dovuta ad un'escoriazione di secondo grado. Scatta una foto.</text>
+	</step>
+	<step id="2" type="out" title="How to">
+		<text type="out" id="t10">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		</text>
+	</step>
+	<step id="3" type="in" title="Foo">
+		<text type="out" id="inputText">Scrivi una nota sul paziente che stai osservando.</text>
+		<inputField type="in" id="if20" width="200" rows="1" label="TITOLO" layout="up">Inserisci il titolo</inputField>
+		<inputField type="in" id="if30" width="200" rows="5" label="TESTO" layout="up">Inserisci il testo</inputField>
+	</step>
+	<step id="4" type="in" title="Patient details">
+		<text type="out" id="radiotext">Il paziente presenta un'irritazione cutanea dovuta ad un'escoriazione di secondo grado?</text>
+		<select type="in" id="s20" mutex="true" >
+			<option id="os21" value="v1">Voce 1</option>
+			<option id="os22" value="v2">Voce 2</option>
+			<option id="os23" value="v3">Voce 3</option>
+			<option id="os24" value="v4">Voce da selezionare</option>
+			<option id="os25" value="v5">Voce da selezionare</option>
+			<option id="os26" value="v6">Voce da selezionare</option>
+		</select>
+	</step>
+	<step id="5" type="yesno" title="Yes or Not?">
+		<text type="out" id="iddom">Il paziente presenta un'irritazione cutanea dovuta ad un'escoriazione di secondo grado?</text>
+	</step>
+</action>
